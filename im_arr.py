@@ -13,25 +13,27 @@ def img_arr(path, file):
     v=(784-x*y)//2
     l=[0]*v
     final=l + mat + l #final centerized matrix 
+    final = list(map(lambda x:x/255,final))
     return final, len(final)
 
 def write(value, length, c): 
-    with open("img_pixels.csv", 'a') as f:
+    with open("img_pixels_1.csv", 'a') as f:
         writer = csv.writer(f)
-        c = list(str(c)) + value
+        # print(value)
+        # print([c])
+        c = [c] + value
         writer.writerow(c)
     
 
-c = 1
-with open("img_pixels.csv", 'a') as f:
+c = -1
+with open("img_pixels_1.csv", 'a') as f:
         writer = csv.writer(f)
         f_row = ['label'] + ['pixel{}'.format(i) for i in range(784)] #first row 
         writer.writerow(f_row)
         
 for path,folders,files in os.walk(r'D:\curri\sixth\Studying\Pbl\Data\img_arr\char_4K_sample, seperated, connected\char_sample'):
     c+=1
+    print(c)
     for file in files:
         result, length = img_arr(path, file)
         write(result, length, c) 
-        
-        
